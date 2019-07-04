@@ -1,19 +1,33 @@
 import React, { Component } from "react";
 import logo from "./logo.svg";
 import "./App.css";
-import { fetchResources } from "./actions";
+import { fetchResources, fetchMarkups } from "./actions";
 import { connect } from "react-redux";
+import MaterialConverter from "./components/MaterialConverter";
 
-class App extends Component {  
-
+class App extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      loading: true
+    };
+  }
   componentDidMount() {
     this.props.fetchResources();
+    this.props.fetchMarkups();
+    this.setState({ loading: false });
+    // async function fetch() {
+    //   await 
+    //   await 
+      
+    // }
+    // fetch();
   }
 
   render() {
     return (
       <div className="App">
-        <header className="App-header">
+        {/* <header className="App-header">
           <img src={logo} className="App-logo" alt="logo" />
           <p>
             Edit <code>src/App.js</code> and save to reload.
@@ -26,7 +40,9 @@ class App extends Component {
           >
             Learn React
           </a>
-        </header>
+        </header> */}
+        {this.props.resources.length === 0 ?<div>Loading</div>:<MaterialConverter {...this.props} />}
+        
       </div>
     );
   }
@@ -34,11 +50,12 @@ class App extends Component {
 
 const mapStateToProps = state => {
   return {
-    resources: state.resourceReducer.resources
+    resources: state.resourceReducer.resources,
+    markups: state.markupReducer.markups
   };
 };
 
 export default connect(
   mapStateToProps,
-  { fetchResources }
+  { fetchResources, fetchMarkups }
 )(App);
