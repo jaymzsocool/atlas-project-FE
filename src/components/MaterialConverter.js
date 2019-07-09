@@ -261,18 +261,48 @@ class MaterialConverter extends Component {
     return groupedOptions;
   };
 
-  handleInputChange = option => {
-    this.setState({ [`resource${this.state.count}`]: option });
+  handleInputChange = (option, num) => {    
+    this.setState({ [`resource${this.state.selectedSelect}`]: option });
   };
 
+  selectedSelect = event =>{    
+    let id = event.target.id.split('-')[2]    
+    this.setState({ selectedSelect: id})
+  }
+
   render() {
+    const children = [];
+
+    for (var i = 0; i < this.state.count; i += 1) {
+      children.push(<ChildComponent key={i} selectOptions={this.createOptions()} handleInputChange={this.handleInputChange} selectedSelect={this.selectedSelect} />);
+    }
     return (
-      <Select
-        options={this.createOptions()}
-        formatGroupLabel={formatGroupLabel}
-        onChange={this.handleInputChange}
-      />
+      <ParentComponent addChild={this.onAddChild}>{children}</ParentComponent>
     );
   }
+  onAddChild = () => {
+    this.setState({
+      count: this.state.count + 1
+    });
+  };
 }
+const ParentComponent = props => (
+  <div className="card calculator">
+    <p>
+      <a href="#" onClick={props.addChild}>
+        Add Another Child Component
+      </a>
+    </p>
+    <div id="children-pane">{props.children}</div>
+  </div>
+);
+
+const ChildComponent = props => (
+  <Select
+    options={props.selectOptions}
+    formatGroupLabel={formatGroupLabel}
+    onChange={props.handleInputChange}
+    onFocus={props.selectedSelect}
+  />
+);
 export default MaterialConverter;

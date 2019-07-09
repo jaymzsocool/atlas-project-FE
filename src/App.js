@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import logo from "./logo.svg";
 import "./App.css";
 import { fetchResources, fetchMarkups } from "./actions";
 import { connect } from "react-redux";
@@ -16,33 +15,13 @@ class App extends Component {
     this.props.fetchResources();
     this.props.fetchMarkups();
     this.setState({ loading: false });
-    // async function fetch() {
-    //   await 
-    //   await 
-      
-    // }
-    // fetch();
+
   }
 
   render() {
     return (
       <div className="App">
-        {/* <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header> */}
-        {this.props.resources.length === 0 ?<div>Loading</div>:<MaterialConverter {...this.props} />}
-        
+        {this.props.resources.length === 0 ?<div>Loading</div>:<MaterialConverter {...this.props} />}        
       </div>
     );
   }
