@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import "./App.css";
 import { fetchResources, fetchMarkups } from "./actions";
 import { connect } from "react-redux";
-import MaterialConverter from "./components/MaterialConverter";
+import ParentComponent from "./components/MaterialConverter";
 
 class App extends Component {
   constructor(props) {
@@ -21,7 +21,7 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        {this.props.resources.length === 0 ?<div>Loading</div>:<MaterialConverter {...this.props} />}        
+        {this.props.resources.length === 0 ?<div>Loading</div>:<ParentComponent {...this.props} />}        
       </div>
     );
   }
